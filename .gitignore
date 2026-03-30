@@ -1,0 +1,9 @@
+.idea/
+cmake-build-debug/
+cmake-build-release/
+
+*.o
+*.out
+http_client
+
+*.dat
