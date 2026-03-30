@@ -9,15 +9,27 @@
 
 ParsedURL * checkArguments(int count, char * argv[])
 {
-    if (count != 2) {
+    if (count != 2 && count !=4) {
         printf("Wrong program arguments please try again! [Correct form: programName <url>]");
         exit(1);
     }
-    char * url = argv[1];
+
     ParsedURL * parsed_url = (ParsedURL *) calloc(1, sizeof(ParsedURL));
     if (parsed_url == NULL) {
         fprintf(stderr, "Critical Error: Cannot allocate memory!");
         exit(1);
+    }
+
+    char * url = NULL;
+    if (count == 2) {
+        strcpy(parsed_url->method, "GET");
+        strcpy(parsed_url->payload, "");
+        url = argv[1];
+    }
+    else if (count == 4) {
+        url = argv[2];
+        strcpy(parsed_url->method, argv[1]);
+        strcpy(parsed_url->payload, argv[3]);
     }
 
     // scheme
@@ -54,5 +66,6 @@ ParsedURL * checkArguments(int count, char * argv[])
         else
             strcpy(parsed_url->port, "80"); // http default port
     }
+
     return parsed_url;
 }
